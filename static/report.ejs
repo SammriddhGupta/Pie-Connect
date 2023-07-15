@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <title>Invoice Report</title>
+    <style>
+      * {
+        box-sizing:content-box;
+        margin: 0;
+        padding: 0;
+      }
+  
+      body { 
+          font-family: "Poppins", sans-serif;
+          background-color: #383c54;
+      }
+  
+      .wrapper {
+        overflow: auto;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 15%;
+        left: 15%;
+        right: 15%;
+        bottom: 5%;
+        display: flex;
+        flex-direction: column;    
+    }
+  
+      .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+  
+      .header img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+  
+      .header h1 {
+        font-size: 24px;
+        font-weight: 500;
+      }
+  
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+  
+      label {
+        margin-bottom: 5px;
+      }
+  
+      input,
+      textarea,
+      select {
+  
+        margin-bottom: 15px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+        font-size: 16px;
+      }
+      #home-btn {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+  
+      #home-btn:hover {
+        background-color: rgb(38, 157, 38);
+      }
+
+      .navbar {
+        background-color: white;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        }
+        
+      .navbar a {
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+      
+      .navbar a:hover {
+        background-color: rgb(38, 157, 38);
+        color: rgb(6, 5, 5);
+      }
+  
+      </style>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar">
+      <a href="#" id="home-butn">Home</a>
+      <a href="#" id="create-btn">Creation</a>
+      <a href="#" id="validate-btn">Validation</a>
+      <a href="#" id="render-btn">Rendering</a>
+      <a href="#" id="validate-render-btn">Validation and Rendering</a>
+      <a href="#" id="store-btn">Storage</a>
+    </nav>
+
+    <div class="wrapper">
+
+        <div class="header">
+
+          <img src="https://png.pngtree.com/png-vector/20190629/ourmid/pngtree-reports-icon-for-your-project-png-image_1521526.jpg" alt="Report logo" />
+          <h1>Communication Report</h1>
+
+        </div>
+        
+
+        <div>
+          <% if (format === 'json') { %>
+            <pre><code><%= JSON.stringify(report, null, 2) %></code></pre>
+          <% } else if (format === 'html') { %>
+            <%- report %>
+          <% } %>          
+        </div>
+        
+    </div>
+
+    <script>
+      // Get references to the navbar links
+		 const homeBtn = document.getElementById('home-butn');
+		 const createBtn = document.getElementById('create-btn');
+		 const validateBtn = document.getElementById('validate-btn');
+		 const renderBtn = document.getElementById('render-btn');
+		 const validateRenderBtn = document.getElementById('validate-render-btn');
+		 const storeBtn = document.getElementById('store-btn');
+   
+		 // Add click event listeners to the navbar links
+   
+		 homeBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.location.href = '/';
+		 });
+   
+		 createBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.open('http://deploy-s2-4-env.eba-fxeq7rku.ap-southeast-2.elasticbeanstalk.com/', '_blank');
+		 });
+   
+		 validateBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.location.href = '/validate';
+		 });
+   
+		 renderBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.location.href = '/render';
+		 });
+   
+		 validateRenderBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.open('https://seng-2021-rendering-frontend.appspot.com/', '_blank');
+		 });
+   
+		 storeBtn.addEventListener('click', function(event) {
+		   event.preventDefault();
+		   window.open('http://node-express-env.eba-9atmj7qr.ap-southeast-2.elasticbeanstalk.com/', '_blank');
+		 });
+
+    </script>
+</body>
+</html>

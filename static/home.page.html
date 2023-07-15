@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PieConnect! An E-Invoicing API</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+      box-sizing:content-box;
+      margin: 0;
+      padding: 0;
+    }
+        
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background-color: #383c54;
+    }
+
+    img {
+      float: left;
+      margin-right: 5px;
+    }    
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px 40px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 600;
+      text-align: center;
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      text-align: left;
+    }    
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: none;
+      box-shadow: inset 0 0 0 2px #ddd;
+    }
+
+    #invoiceId {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: none;
+      box-shadow: inset 0 0 0 2px #ddd;
+      width: 100%;
+      box-sizing: border-box;
+    }    
+
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 20px 0;
+      background-color: #2196f3;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0c7cd5;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 20px 0;
+      background-color: #2196f3;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      background-color: #0c7cd5;
+    }
+
+    button:hover, input[type="submit"]:hover {
+      background-color: rgb(38, 157, 38);
+    }
+
+    .health-status {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+      top: 40%;
+      left: 40%;
+    }
+
+    .health-status.ok {
+      background-color: #4CAF50;
+    }
+    
+    .health-status.error {
+      background-color: #f44336;
+    }
+    
+    .health-status .value {
+      font-size: 40px;
+    }
+    
+    .health-status .label {
+      font-size: 10px;
+      position: absolute;
+      margin-top: -115px;
+      left: 50%;
+      transform: translateX(-50%);
+    }  
+
+    .navbar {
+      background-color: white;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .navbar a {
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    .navbar a:hover {
+      background-color: rgb(38, 157, 38);
+      color: rgb(6, 5, 5);
+    }
+    
+  </style>
+
+
+
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" id="home-btn">Home</a>
+    <a href="#" id="create-btn">Creation</a>
+    <a href="#" id="validate-btn">Validation</a>
+    <a href="#" id="render-btn">Rendering</a>
+    <a href="#" id="validate-render-btn">Validation and Rendering</a>
+    <a href="#" id="store-btn">Storage</a>
+  </nav>
+  
+
+  <div class="container">
+
+    <img src="https://png.pngtree.com/png-clipart/20220816/ourmid/pngtree-warm-apple-pie-png-image_6111598.png" alt="Apple Pie Logo" height="100" width="100" >
+    <h1>Welcome to PieConnect!</h1>
+    <h1>Team Apple Pie's E-Invoicing API</h1>
+
+    <div id="health-status" class="health-status"></div>
+
+    <h2>How may we assist you today?</h2>
+
+    <div class="button-group">
+      <button onclick="window.location.href = '/email';">PieMail</button>
+      <button onclick="window.location.href = '/sms';">PieMessage</button>
+    </div>
+
+    <br>
+
+    <h3>Want to check past reports? Don't worry, we gotchu!</h3>
+
+    <form id="report-form">
+      <label for="invoiceId">Invoice ID</label>
+      <input type="text" id="invoiceId" name="id" placeholder="eg: Invoice01" required>
+    
+      <label for="format">Report Format</label>
+      <select id="format" name="format">
+        <option value="json">JSON</option>
+        <option value="html">HTML</option>
+        <option value="pdf">PDF</option>
+      </select>
+    
+      <input type="submit" value="Get Report">
+    </form>
+
+    <script>
+
+      const healthStatusElement = document.getElementById('health-status');
+
+      fetch('/healthcheck')
+        .then(response => response.json())
+        .then(data => {
+          const { status } = data;
+
+          healthStatusElement.classList.add(status);
+
+          healthStatusElement.innerHTML = `
+            <div class="value">${status.toUpperCase()}</div>
+            
+          `;
+        })
+        .catch(error => {
+          console.error(error);
+          healthStatusElement.classList.add('error');
+          healthStatusElement.innerHTML = `
+            <div class="value">ERROR</div>
+            
+          `;
+        });
+
+      const form = document.getElementById('report-form');
+    
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        const invoiceId = document.getElementById('invoiceId').value;
+        const format = document.getElementById('format').value;
+    
+        window.location.href = `/retrieve/${invoiceId}/${format}`;
+      });
+
+      // Get references to the navbar links
+      const homeBtn = document.getElementById('home-btn');
+      const createBtn = document.getElementById('create-btn');
+      const validateBtn = document.getElementById('validate-btn');
+      const renderBtn = document.getElementById('render-btn');
+      const validateRenderBtn = document.getElementById('validate-render-btn');
+      const storeBtn = document.getElementById('store-btn');
+
+      // Add click event listeners to the navbar links
+
+      homeBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = '/';
+      });
+
+      createBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open('http://deploy-s2-4-env.eba-fxeq7rku.ap-southeast-2.elasticbeanstalk.com/', '_blank');
+      });
+
+      validateBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = '/validate';
+      });
+
+      renderBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = '/render';
+      });
+
+      validateRenderBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open('https://seng-2021-rendering-frontend.appspot.com/', '_blank');
+      });
+
+      storeBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open('http://node-express-env.eba-9atmj7qr.ap-southeast-2.elasticbeanstalk.com/', '_blank');
+      });
+
+
+
+    </script>
+  </div>
+  
+</body>
+</html>
+

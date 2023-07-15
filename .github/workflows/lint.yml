@@ -1,0 +1,29 @@
+name: Lint CI
+
+on:
+  push:
+    branches: [ "main", "sprint3_testing" ] 
+  pull_request:
+    
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Linting
+      run: npm run lint
